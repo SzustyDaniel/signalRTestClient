@@ -1,10 +1,6 @@
 :host{
   display: grid;
-  grid-template-rows: 10% 10% 80%;
-}
-
-.chat-title{
-  padding: 1rem;
+  grid-template-rows: 5% 90% 5%;
 }
 
 .chat-form{
@@ -66,4 +62,8 @@
       padding-right: 1rem;
     }
   }
+}
+
+.icon-credit{
+  padding: 0 1rem;
 }
