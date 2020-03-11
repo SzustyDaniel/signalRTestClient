@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
   private initForm() {
     this.chatForm = this.formBuilder.group({
       userName: ['', [Validators.required, Validators.minLength(3)]],
-      message: ['', [Validators.required, Validators.minLength(1)]],
+      message: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       });
   }
 

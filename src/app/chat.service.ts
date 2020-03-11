@@ -30,6 +30,9 @@ export class ChatService {
     this._connection.start()
       .then(console.log('SignalR Service Connected'))
       .catch(err => console.error(err));
+
+    // TODO remove interval once done testing
+    // interval(10000).pipe(tap(x => this.pushMessageToClient('test', `my value ${x}`))).subscribe();
   }
 
   // Handle and update messages received by the HUB
