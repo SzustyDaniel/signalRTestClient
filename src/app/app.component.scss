@@ -1,0 +1,11 @@
+:host{
+  display: grid;
+  grid-template-rows: 10% 90%;
+}
+
+.main-title{
+  font-size: 3.5rem;
+  font-weight: 500;
+  padding: 1rem;
+  text-align: center;
+}
