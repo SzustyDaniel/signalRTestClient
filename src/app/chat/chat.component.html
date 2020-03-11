@@ -1,17 +1,18 @@
 <h2 class="chat-title">My Chat</h2>
-<div class="chat-form">
+<form class="chat-form" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
   <label class="chat-control">
     <span>UserName: </span>
-    <input type="text">
+    <input formControlName="userName" type="text">
   </label>
   <label class="chat-control">
     <span>Message: </span>
-    <input type="text">
+    <input formControlName="message" type="text">
   </label>
-  <button>Send Message</button>
-</div>
+  <button [disabled]="!chatForm.valid" type="submit">Send Message</button>
+</form>
 <div class="chat-main">
-  <div class="chat-line">item</div>
-  <div class="chat-line">item</div>
-
+  <div class="chat-line" *ngFor="let message of messages$| async">
+    <span class="chat-line-maker">{{message.timeReceived | date: 'HH:mm:ss'}} by {{message.username}}: </span>
+    {{message.message}}
+  </div>
 </div>

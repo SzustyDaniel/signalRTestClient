@@ -1,16 +1,21 @@
 import {Injectable, OnInit} from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import {Subject} from 'rxjs';
+import {interval, Subject} from 'rxjs';
+import {Message} from './model/message';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private connection;
+  private _connection;
+  private _messages: Message[] = [];
+  messagesReceived$ = new Subject<Message[]>();
 
   constructor() {
+
     // TODO give hub url better name
-    this.connection = new signalR.HubConnectionBuilder()
+    this._connection = new signalR.HubConnectionBuilder()
       .withUrl('/hub')
       .configureLogging(signalR.LogLevel.Information)
       .withAutomaticReconnect()
@@ -18,23 +23,25 @@ export class ChatService {
 
 
 
-    this.connection.on('messageReceived', (username: string, message: string) => {
+    this._connection.on('messageReceived', (username: string, message: string) => {
       this.pushMessageToClient(username, message);
     });
 
-    this.connection.start()
+    this._connection.start()
       .then(console.log('SignalR Service Connected'))
       .catch(err => console.error(err));
   }
 
   // Handle and update messages received by the HUB
-  private pushMessageToClient(username: string, message: string) {
-    // TODO create observer for the stream of data to the user.
+  private pushMessageToClient(user: string, mesg: string) {
+    this._messages.push({username: user, message: mesg, timeReceived: Date.now()});
+    this.messagesReceived$.next(this._messages);
   }
 
   // Send new message to the server.
-  public sendMessage(username: string, message: string) {
-    this.connection.invoke('newMessage', username, message).catch(err => console.log(err));
+  public sendMessage(user: string, msg: string) {
+    this._connection.invoke('newMessage', user, msg).catch(err => console.log(err));
+    this.pushMessageToClient(user, msg);
   }
 
 }
