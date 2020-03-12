@@ -13,26 +13,21 @@ export class ChatService {
   messagesReceived$ = new Subject<Message[]>();
 
   constructor() {
-
-    // TODO give hub url better name
     this._connection = new signalR.HubConnectionBuilder()
-      .withUrl('/hub')
+      .withUrl('https://localhost:44375/chathub')
       .configureLogging(signalR.LogLevel.Information)
       .withAutomaticReconnect()
       .build();
 
 
 
-    this._connection.on('messageReceived', (username: string, message: string) => {
+    this._connection.on('SendPublicMessage', (username: string, message: string) => {
       this.pushMessageToClient(username, message);
     });
 
     this._connection.start()
       .then(console.log('SignalR Service Connected'))
       .catch(err => console.error(err));
-
-    // TODO remove interval once done testing
-    // interval(10000).pipe(tap(x => this.pushMessageToClient('test', `my value ${x}`))).subscribe();
   }
 
   // Handle and update messages received by the HUB
@@ -43,7 +38,7 @@ export class ChatService {
 
   // Send new message to the server.
   public sendMessage(user: string, msg: string) {
-    this._connection.invoke('newMessage', user, msg).catch(err => console.log(err));
+    this._connection.invoke('SendPublicMessage', user, msg).catch(err => console.log(err));
     this.pushMessageToClient(user, msg);
   }
 

@@ -1,7 +1,8 @@
 :host{
   display: grid;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 0.15fr 0.85fr;
   background-color: #ccc;
+  gap: 1rem;
 }
 
 .main-title{
