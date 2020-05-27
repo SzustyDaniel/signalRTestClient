@@ -1,5 +1,8 @@
 # SignalRTestClient
 
+Might add server implementation to repository later.
+If you want a working hub example go to msdn typescript example for signalR implementaion.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
 
 ## Development server
