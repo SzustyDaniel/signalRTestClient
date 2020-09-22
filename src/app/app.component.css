@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  grid-template-rows: 10% 90%;
+  background-color: #ccc;
+}
+
+.main-title {
+  font-size: 3.5rem;
+  font-weight: 500;
+  padding: 1rem;
+  text-align: center;
+}
+
+/*# sourceMappingURL=app.component.css.map */
